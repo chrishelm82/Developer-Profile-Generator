@@ -52,7 +52,7 @@ function init() {
       // console.log(data.color)
 
       data.username = username;
-      data.numOfRepo = res.data.public_repos;
+      data.numOfRepo = res.data.public_repo;
       data.name = res.data.name;
       data.followers = res.data.followers;
       data.following = res.data.following;
