@@ -1,7 +1,9 @@
+// Installed packages
 const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
 const convertFactory = require("electron-html-to");
+const open = require('open');
 
 // const generateHTML = require('./generateHTML.js')
 
@@ -32,8 +34,10 @@ function init() {
   inquirer.prompt(questions).then(function({ username, color }) {
     const queryUrl = `https://api.github.com/users/${username}`;
 
+    //console.log(username, color);
+
     axios.get(queryUrl).then(res => {
-      // console.log(res.data)
+       //console.log(res.data)
 
       switch (color) {
         case "green":
@@ -72,23 +76,30 @@ function init() {
             data.stars += res.data[i].stargazers_count;
           }
 
-          // console.log(data.stars)
+          //console.log(data)
+        
 
           let resumeHTML = generateHTML(data);
-          // console.log(resumeHTML)
+          //console.log(resumeHTML)
 
           conversion({ html: resumeHTML }, function(err, result) {
             if (err) {
-              return console.error(err);
+              console.error(err);
+              return 
             }
-
-            console.log(result.numberOfPages);
-            console.log(result.logs);
+            console.log(result)
+            //console.log(result.numberOfPages);
+            //console.log(result.logs);
             result.stream.pipe(fs.createWriteStream("./resume.pdf"));
             conversion.kill(); // necessary if you use the electron-server strategy, see bellow for details
+            open('resume.PDF')
+
           });
         });
-    });
+    }).catch(function (err) {
+      console.log(`username ${username} not found. Please check spelling and try again.`)
+      init ()
+    })
   });
 }
 
