@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/chrishelm82/Developer-Profile-Generator#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "electron": "^5.0.13",
     "electron-html-to": "^2.6.0",
     "inquirer": "^7.0.3",
